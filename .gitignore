@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+node_modules/
+presentation/source/
+presentation/assets/
+presentation/package*.json
+.DS_Store
+Thumbs.db
+evidence/*
+!evidence/README.md
+!evidence/s3-benchmark.csv
+!evidence/lambda-boto3-benchmark.csv

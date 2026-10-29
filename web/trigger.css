@@ -1,0 +1,37 @@
+.trigger-lab{margin:0 0 24px;background:#fff;border:1px solid var(--line);border-left:6px solid var(--orange)}
+.trigger-lab>summary{cursor:pointer;padding:16px 22px;font-size:23px;font-weight:800;color:var(--purple)}
+.tl-body{padding:4px 22px 22px}
+.tl-top{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.tl-top .targets{margin:0}.tl-lead{margin:0;font-size:19px;color:var(--muted);flex:1;min-width:280px}
+.tl-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0 0 18px;padding:0;list-style:none}
+.tl-step button{width:100%;text-align:left;background:#fff;border:2px solid var(--purple);color:var(--purple);padding:13px 15px;font-size:21px;font-weight:800;border-radius:3px}
+.tl-step button:hover:not(:disabled){background:var(--pale)}
+.tl-step button:disabled{opacity:.45;cursor:not-allowed}
+.tl-step button.next{background:var(--orange);border-color:var(--orange);color:#251b3f;box-shadow:0 4px 0 #b76312}
+.tl-step p{margin:7px 2px 0;font-size:16px;color:var(--muted)}
+.tl-state{border:1px solid var(--line);background:#faf9fd;padding:14px 18px;margin-bottom:12px}
+.tl-line{margin:0 0 8px;font-size:21px;font-weight:700}
+.tl-line.off{color:var(--bad)}.tl-line.on{color:var(--good)}
+.tl-files{width:100%;border-collapse:collapse;font-size:19px}
+.tl-files td{border-top:1px solid var(--line);padding:9px 8px}.tl-files td:first-child{font-family:Consolas,monospace;font-size:17px}
+.tl-files .has{color:var(--good);font-weight:700}.tl-files .none{color:var(--bad);font-weight:700}
+.tl-none{color:var(--muted);font-size:19px;margin:6px 0 0}
+.tl-note{font-size:18px;color:var(--purple);border-left:4px solid var(--orange);background:var(--pale);padding:10px 14px;margin:0 0 12px}
+.tl-evidence{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.tl-evidence button{font-size:17px}
+.tl-source{font-weight:700;color:var(--purple);margin:12px 0 6px;font-size:17px}
+.tl-pre{max-height:220px;font-size:15px}
+.flow-node.tl-off{background:rgba(229,134,36,.28);outline:3px solid var(--orange);outline-offset:-3px}
+@media(max-width:1000px){.tl-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.tl-steps{grid-template-columns:1fr}}
+
+.tl-progress{font-size:19px;color:var(--purple);font-weight:800;margin:0 0 10px}
+.tl-step button.completed{border-color:#98a5a0;background:#f4f6f5;color:#345047}
+.tl-step button.next{background:var(--orange);border-color:var(--orange);color:#251b3f}
+.tl-files td{overflow-wrap:anywhere}
+@media(max-width:1150px){.tl-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* The fault-injection experiment follows the normal upload and report. */
+.investigation-area{margin:26px 0 34px}
+.investigation-area .trigger-lab{margin:0}
+.tl-evidence button:disabled{opacity:.46;cursor:not-allowed}

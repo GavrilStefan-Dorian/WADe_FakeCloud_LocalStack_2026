@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#352764"/>
+<title>Graduate report · Queued jobs | FakeCloud / LocalStack</title>
+<link rel="stylesheet" href="/styles.css"/>
+<link rel="stylesheet" href="/jobs.css"/>
+<script defer src="/jobs.js"></script>
+</head>
+<body>
+<header class="topbar">
+<div class="topbar-inner">
+<strong class="project-name">WADe <span class="topbar-separator">/</span> FakeCloud vs. LocalStack</strong>
+<nav class="mode-nav" aria-label="Demo modes">
+<a href="/">S3 event processing</a>
+<a href="/jobs" class="current" aria-current="page">Queued processing <span class="nav-services">SQS + DynamoDB</span></a>
+</nav>
+<div class="emulator-status" aria-label="Local emulator status">
+<span class="engine-status" id="engine-fakecloud"><span class="status-dot"></span><strong>FakeCloud</strong><span class="status-word">Checking</span></span>
+<span class="engine-status" id="engine-localstack"><span class="status-dot"></span><strong>LocalStack</strong><span class="status-word">Checking</span></span>
+</div>
+</div>
+</header>
+<main class="shell jobs-shell">
+<div class="page-heading">
+<div class="page-title-block"><span class="eyebrow">Graduate processing · SQS + DynamoDB</span><h1>Queued jobs</h1></div>
+<details class="how-it-works"><summary>What happens to the job?</summary><div class="how-content"><p><strong>Queue.</strong> Save the CSV to S3, write a job to SQS and record its status in DynamoDB.</p><p><strong>Try and interrupt.</strong> A local worker receives the SQS message without deleting it. After the visibility timeout the job can be delivered again.</p><p><strong>Complete.</strong> The worker invokes the same Lambda used in direct processing, checks its report, updates DynamoDB and deletes the SQS message.</p></div></details>
+</div>
+<section class="service-flow" aria-label="Queued graduate processing path">
+<div class="flow-node"><span>01 · Store</span><strong>S3 input</strong><small>Graduate CSV</small></div><span class="flow-arrow" aria-hidden="true">→</span>
+<div class="flow-node"><span>02 · Queue</span><strong>SQS</strong><small>Waiting job</small></div><span class="flow-arrow" aria-hidden="true">→</span>
+<div class="flow-node"><span>03 · Process</span><strong>Worker + Lambda</strong><small>Graduate report</small></div><span class="flow-arrow" aria-hidden="true">→</span>
+<div class="flow-node"><span>04 · Track</span><strong>DynamoDB</strong><small>Job history</small></div>
+</section>
+<section class="input-section job-input" aria-labelledby="job-input-title">
+<div class="section-title"><h2 id="job-input-title">Data</h2><span class="section-kicker">Queue a graduate CSV</span></div>
+<div class="input-grid">
+<div class="source-panel">
+<div class="sample-controls" role="group" aria-label="Sample CSV">
+<button type="button" class="sample-button active" id="valid" aria-pressed="true">Valid sample</button>
+<button type="button" class="sample-button" id="problems" aria-pressed="false">Sample with errors</button>
+</div>
+<div class="preview-heading"><strong>CSV preview</strong><span id="source-note">Loading sample…</span></div>
+<div class="data-preview" id="csv-preview" aria-live="polite"></div>
+<details class="edit-source" id="edit-source"><summary id="edit">Edit CSV</summary><label class="field-label" for="csv">CSV contents</label><textarea id="csv" aria-label="Graduate CSV" spellcheck="false"></textarea></details>
+<label class="file-label" for="csv-file">Open CSV file</label><input type="file" accept=".csv,text/csv" id="csv-file"/>
+</div>
+<div class="action-panel">
+<h3>Queue dataset</h3>
+<fieldset class="targets"><legend>Run on</legend><label><input type="checkbox" id="fakecloud" checked> FakeCloud</label><label><input type="checkbox" id="localstack" checked> LocalStack</label></fieldset>
+<button type="button" id="submit" class="run-button">Queue dataset</button>
+<p class="run-hint">Jobs wait until you process them below.</p>
+</div>
+</div>
+</section>
+<section class="full-results" aria-labelledby="queue-heading">
+<div class="section-title"><h2 id="queue-heading">Processing workers</h2><span class="section-kicker">Two separate local environments</span></div>
+<div class="result-grid" id="worker-grid">
+<article class="report worker-card" data-emulator="FakeCloud"><div class="report-top"><h3>FakeCloud</h3><span class="worker-state" id="fc-state">Checking</span></div><div class="worker-body"><div class="queue-counts"><div><b id="fc-visible">–</b><span>Visible (approx.)</span></div><div><b id="fc-flight">–</b><span>Temporarily hidden (approx.)</span></div></div><div class="worker-actions"><button type="button" class="outline-button" data-action="interrupt">Interrupt pickup</button><button type="button" class="run-button" data-action="pickup">Process next job</button></div><div class="current-job" id="fc-latest" aria-live="polite">No jobs submitted yet.</div><div class="worker-response" id="fc-response" aria-live="polite">No action yet.</div><details class="worker-history"><summary>Recent jobs</summary><div class="history" id="fc-history"></div></details></div></article>
+<article class="report worker-card" data-emulator="LocalStack"><div class="report-top"><h3>LocalStack</h3><span class="worker-state" id="ls-state">Checking</span></div><div class="worker-body"><div class="queue-counts"><div><b id="ls-visible">–</b><span>Visible (approx.)</span></div><div><b id="ls-flight">–</b><span>Temporarily hidden (approx.)</span></div></div><div class="worker-actions"><button type="button" class="outline-button" data-action="interrupt">Interrupt pickup</button><button type="button" class="run-button" data-action="pickup">Process next job</button></div><div class="current-job" id="ls-latest" aria-live="polite">No jobs submitted yet.</div><div class="worker-response" id="ls-response" aria-live="polite">No action yet.</div><details class="worker-history"><summary>Recent jobs</summary><div class="history" id="ls-history"></div></details></div></article>
+</div>
+<div class="queue-footer"><span>The job status comes from DynamoDB. SQS counts are approximate and can lag.</span><button class="outline-button" type="button" id="refresh">Refresh queue state</button></div>
+</section>
+<footer class="page-footer"><strong>WADe <span class="footer-slash">/</span> 2026</strong><span>FakeCloud vs. LocalStack</span></footer>
+</main>
+</body>
+</html>

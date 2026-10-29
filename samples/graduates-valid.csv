@@ -1,0 +1,13 @@
+graduate_id,graduation_year,program,industry,city,status
+G001,2022,Computer Science,Software,Iasi,employed
+G002,2022,Computer Science,"IT, Consulting",Bucharest,employed
+G003,2023,Data Science,Finance,Cluj-Napoca,employed
+G004,2023,Psychology,,Iasi,seeking
+G005,2024,Computer Science,Software,Bucharest,employed
+G006,2024,Data Science,,Iasi,studying
+G007,2024,Psychology,Education,Timisoara,employed
+G008,2025,Data Science,Research,Cluj-Napoca,employed
+G009,2025,Computer Science,,Iasi,seeking
+G010,2025,Psychology,,Bucharest,studying
+G011,2026,Computer Science,Software,Iasi,employed
+G012,2026,Data Science,,Cluj-Napoca,seeking

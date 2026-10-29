@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#352764" name="theme-color"/>
+<title>Graduate report | FakeCloud / LocalStack</title>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/trigger.css" rel="stylesheet"/>
+<script defer="" src="/app.js"></script>
+<script defer="" src="/trigger.js"></script>
+</head>
+<body>
+<header class="topbar">
+<div class="topbar-inner">
+<strong class="project-name">WADe <span class="topbar-separator">/</span> FakeCloud vs. LocalStack</strong>
+<nav aria-label="Demo modes" class="mode-nav">
+<a href="/" aria-current="page" class="current">S3 event processing</a>
+<a href="/jobs">Queued processing <span class="nav-services">SQS + DynamoDB</span></a>
+</nav>
+<div aria-label="Local emulator status" class="emulator-status">
+<span class="engine-status" id="engine-fakecloud"><span class="status-dot"></span><strong>FakeCloud</strong><span class="status-word">Checking</span></span>
+<span class="engine-status" id="engine-localstack"><span class="status-dot"></span><strong>LocalStack</strong><span class="status-word">Checking</span></span>
+</div>
+</div>
+</header>
+<main class="shell">
+<div class="page-heading">
+<div class="page-title-block">
+<span class="eyebrow">CSV processing · FakeCloud vs. LocalStack</span>
+<h1>Graduate report</h1>
+</div>
+<details class="how-it-works">
+<summary>What happens to the file?</summary>
+<div class="how-content">
+<p><strong>Upload a CSV.</strong> Our local server puts the file in the selected emulator’s <code>wade-graduates-in</code> bucket. Open the S3 inspection panel to find that object.</p>
+<p><strong>Lambda runs automatically.</strong> S3 sends an <code>ObjectCreated</code> notification to <code>wade-graduates-v1</code>. It validates each record and calculates the totals.</p>
+<p><strong>Read the result.</strong> Lambda saves a JSON report in <code>wade-graduates-out</code>. Open the activity and inspection panels to see what was observed in each emulator.</p>
+</div>
+</details>
+</div>
+<section aria-label="AWS-style service path" class="service-flow">
+<div class="flow-node" id="fn-store"><span>01 · Store</span><strong>S3 input bucket</strong><small>wade-graduates-in</small></div>
+<span aria-hidden="true" class="flow-arrow">→</span>
+<div class="flow-node" id="fn-notify"><span>02 · Notify</span><strong>ObjectCreated</strong><small>S3 bucket notification</small></div>
+<span aria-hidden="true" class="flow-arrow">→</span>
+<div class="flow-node"><span>03 · Execute</span><strong>Lambda</strong><small>wade-graduates-v1</small></div>
+<span aria-hidden="true" class="flow-arrow">→</span>
+<div class="flow-node" id="fn-read"><span>04 · Read</span><strong>S3 report</strong><small>wade-graduates-out</small></div>
+</section>
+<div class="work-area">
+<section aria-labelledby="input-title" class="input-section">
+<div class="section-title"><h2 id="input-title">Data</h2><span class="section-kicker"></span></div><div class="input-grid"><div class="source-panel"><div aria-label="Sample CSV" class="sample-controls" role="group">
+<button aria-pressed="true" class="sample-button active" data-sample="valid" type="button">Valid sample</button>
+<button aria-pressed="false" class="sample-button" data-sample="problems" type="button">Sample with errors</button>
+</div><div class="preview-heading"><strong>CSV preview</strong><span></span></div><div aria-live="polite" class="data-preview" id="csv-preview"></div><details class="edit-source" id="edit-source">
+<summary>Edit CSV</summary>
+<label class="field-label" for="csv-editor">CSV contents</label>
+<textarea aria-label="CSV contents" id="csv-editor" placeholder="Loading sample CSV…" spellcheck="false"></textarea>
+</details><label class="file-label" for="csv-file">Open CSV file</label><input accept=".csv,text/csv" id="csv-file" type="file"/></div><div class="action-panel"><h3>Process CSV</h3><fieldset class="targets">
+<legend>Run on</legend>
+<label><input checked="" id="select-fakecloud" type="checkbox"/> FakeCloud</label>
+<label><input checked="" id="select-localstack" type="checkbox"/> LocalStack</label>
+</fieldset><button class="run-button" id="run-button" type="button">Process CSV</button><p aria-live="polite" class="run-hint" id="run-hint" role="status"></p></div></div>
+
+
+
+
+
+
+
+
+
+</section>
+
+</div>
+<section aria-labelledby="reports-title" class="full-results">
+<div class="section-title"><h2 id="reports-title">Generated reports</h2><span class="section-kicker"></span></div>
+<div aria-live="polite" class="comparison-note" hidden="" id="comparison"></div><div class="results-empty" id="results"><p>Choose a sample and run it to inspect the generated report.</p></div>
+<details class="trace-toggle" id="trace-toggle">
+<summary>Show S3 request trace</summary>
+<div aria-live="polite" class="activity-board" id="activity">
+<div class="activity-empty">Run a CSV to inspect the S3 upload and report retrieval.</div>
+</div>
+</details></section>
+<section class="investigation-area" aria-label="Trigger failure investigation">
+<details class="trigger-lab" id="trigger-lab">
+<summary>Break the S3 notification: what happens when an upload does not trigger Lambda?</summary>
+<div class="tl-body">
+<div class="tl-top"><fieldset class="targets"><legend>Emulator</legend>
+<label><input checked="" name="tl-emu" type="radio" value="FakeCloud"/> FakeCloud</label>
+<label><input name="tl-emu" type="radio" value="LocalStack"/> LocalStack</label></fieldset>
+<p class="tl-lead">Try this after processing a CSV normally. Disconnect the notification, upload the same sample, then repair and retry. Each result is checked in the selected emulator.</p></div>
+<p class="tl-progress" id="tl-progress" aria-live="polite">Open this panel to check the experiment state.</p>
+<ol class="tl-steps">
+<li class="tl-step"><button id="tl-disconnect" type="button">1 · Disconnect trigger</button><p>Removes the S3 → Lambda notification.</p></li>
+<li class="tl-step"><button id="tl-upload" type="button">2 · Upload a CSV</button><p>The file is stored. Does a report appear?</p></li>
+<li class="tl-step"><button id="tl-reconnect" type="button">3 · Reconnect trigger</button><p>Restores the saved notification.</p></li>
+<li class="tl-step"><button id="tl-replay" type="button">4 · Replay the file</button><p id="tl-replay-cap">Available after reconnecting the trigger.</p></li>
+</ol>
+<div class="tl-state" aria-live="polite"><p class="tl-line" id="tl-trigger">Open this panel to read the current state.</p><div id="tl-files"></div></div>
+<p class="tl-note" id="tl-note" hidden></p>
+<p class="tl-note" id="tl-explain">Replaying makes a NEW upload event. The original missed event is not recovered.</p>
+<div class="error-panel" id="tl-error" hidden></div>
+<div class="tl-evidence"><button class="sample-button" id="tl-evidence" type="button">Inspect Lambda event after replay</button><button class="sample-button" id="tl-reset" type="button">Reset the experiment</button></div>
+<div id="tl-evbox" hidden><p class="tl-source" id="tl-source"></p><pre class="raw-json tl-pre" id="tl-pre"></pre></div>
+</div>
+</details>
+</section>
+<footer class="page-footer">
+<strong>WADe <span class="footer-slash">/</span> 2026</strong>
+<span>FakeCloud vs. LocalStack</span>
+
+</footer>
+</main>
+</body>
+</html>

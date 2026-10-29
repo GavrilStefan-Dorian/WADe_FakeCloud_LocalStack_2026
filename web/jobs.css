@@ -1,0 +1,40 @@
+/* The two modes share styles.css. This file adds only queue-specific controls. */
+.jobs-shell .job-input{box-shadow:0 5px 17px rgba(43,33,77,.06)}
+.jobs-shell .data-preview{max-height:355px;overflow:auto}
+.jobs-shell .page-heading h1{font-size:clamp(28px,2.9vw,42px)}
+.jobs-shell .worker-body{padding:22px 24px 24px}
+.jobs-shell .worker-state{font-size:16px;color:#b9f6d8;font-weight:700}
+.jobs-shell .queue-counts{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
+.jobs-shell .queue-counts>div{padding-bottom:15px;border-bottom:2px solid #e7e0ef;display:flex;flex-direction:column;gap:2px}
+.jobs-shell .queue-counts b{font-size:clamp(30px,3vw,43px);line-height:1.15;color:var(--purple)}
+.jobs-shell .queue-counts span{font-size:17px;color:var(--muted)}
+.jobs-shell .worker-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.jobs-shell .worker-actions button{min-height:60px;padding:12px 15px;font-size:18px;font-weight:750;border-radius:3px;cursor:pointer}
+.jobs-shell .worker-actions .run-button{font-size:18px;box-shadow:0 4px 0 #b76312}
+.jobs-shell .outline-button{background:white;color:var(--purple);border:2px solid #9a88bc}
+.jobs-shell .outline-button:hover{background:#f3eff9}
+.jobs-shell .outline-button:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.jobs-shell button:disabled{opacity:.6;cursor:wait}
+.jobs-shell .worker-response{min-height:83px;margin-top:19px;padding:15px 17px;background:#f3eef9;border-left:4px solid #a392c2;font-size:17px;line-height:1.45;overflow-wrap:anywhere}
+.jobs-shell .worker-response.ok{border-color:var(--good);background:#ecf7f1}
+.jobs-shell .worker-response.problem{border-color:var(--bad);background:#fff1f0}
+.jobs-shell .worker-history{border-top:1px solid var(--line);margin-top:19px;padding-top:16px}
+.jobs-shell .worker-history summary{cursor:pointer;color:var(--purple);font-size:18px;font-weight:750}
+.jobs-shell .history{margin-top:13px;font-size:16px;min-height:30px}
+.jobs-shell .job{border-bottom:1px solid var(--line);padding:10px 0;display:flex;flex-wrap:wrap;gap:9px 14px;justify-content:space-between;overflow-wrap:anywhere}
+.jobs-shell .job b{color:var(--purple)}
+.jobs-shell .queue-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px;color:#615877;font-size:17px}
+.jobs-shell .queue-footer button{padding:12px 17px;font-size:17px;font-weight:750;cursor:pointer}
+.jobs-shell .input-grid{grid-template-columns:minmax(0,1.4fr) minmax(310px,.7fr)}
+.jobs-shell .sample-controls{margin-bottom:17px}
+.jobs-shell #csv{width:100%;min-height:210px;font:16px/1.5 Consolas,monospace;border:1px solid var(--line);padding:12px;margin:12px 0 2px;resize:vertical}
+.jobs-shell .full-results{margin-top:24px}
+@media(max-width:1060px){.jobs-shell .input-grid{grid-template-columns:1fr}}
+@media(max-width:750px){.jobs-shell .worker-actions{grid-template-columns:1fr}.jobs-shell .worker-body{padding:17px}.jobs-shell .queue-footer{align-items:flex-start}.jobs-shell .queue-counts b{font-size:32px}}
+
+/* Show the durable DynamoDB status without burying it under Recent jobs. */
+.jobs-shell .current-job{font-size:17px;line-height:1.45;margin:15px 0 6px;padding:13px 16px;background:#f4f0f9;border-left:4px solid #8b74b7;overflow-wrap:anywhere}
+.jobs-shell .current-job.job-interrupted,.jobs-shell .current-job.job-failed{border-left-color:#ed8b19;background:#fff5e9}
+.jobs-shell .current-job.job-completed{border-left-color:#267956;background:#eaf7f0}
+.jobs-shell .current-job.job-queued{border-left-color:#5b4a8f}
+.jobs-shell .queue-counts span{font-size:16px;line-height:1.35}

@@ -1,0 +1,17 @@
+name: wade-graduate-demo
+services:
+  fakecloud:
+    # Digests identify the images used for the presentation, not a moving latest tag.
+    image: ghcr.io/faiscadev/fakecloud@sha256:6e3ba30ec0b4b03aa71d2551fdc92541d59763823f7db9d3449d66ab6e3dca30
+    ports:
+      - "127.0.0.1:4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  localstack:
+    image: localstack/localstack@sha256:2290500d7398e6458544fab2f49aaf170b81a1006ee69067e8e7fc59b810a824
+    ports:
+      - "127.0.0.1:4567:4566"
+    environment:
+      LOCALSTACK_AUTH_TOKEN: ${LOCALSTACK_AUTH_TOKEN:?Set LOCALSTACK_AUTH_TOKEN in .env}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
