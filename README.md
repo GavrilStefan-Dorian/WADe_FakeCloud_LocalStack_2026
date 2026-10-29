@@ -10,6 +10,8 @@ The browser shows reports and lets you disconnect the S3 notification, observe t
 
 ## Presentation
 
+[View the presentation on Canva](https://canva.link/cttoe3s0duqmvom)
+
 [View the slides (PDF)](presentation/FakeCloud-vs-LocalStack.pdf)
 
 [Download the editable PowerPoint](presentation/FakeCloud-vs-LocalStack.pptx)
